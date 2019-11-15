@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Slingshot</title>
+        <link rel='stylesheet' href="css/index.css">
+    </head>
+    <body>
+        <div id="chat_log"></div>
+        <form id="input_form">
+            <label>Name:</label>
+            <input type="text" name='username' />
+            <input type="button" value='Start' id='start_button' />
+            <input type="button" value='Stop' id='stop_button' />
+        </form>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+            <script type="text/javascript" charset="utf-8">
+                var chat_log = document.getElementById('chat_log');
+                var start_button = document.getElementById('start_button');
+                var stop_button = document.getElementById('stop_button');
+                var interval1;
+                var interval2;
+                var current_position = "";
+                var username = document.getElementsByName('username')[0];
+                var socket = io();
+                var i = 0;
+                socket.on('connect', function() {
+                    socket.emit('joined', {});
+                });
+
+                socket.on('update', function(data){
+                    var element = document.createElement('div');
+                    element.innerText = data.msg;
+                    chat_log.append(element);
+                });
+
+                start_button.onclick = function(){
+                    interval1 = window.setInterval(sendPosition, 1000);
+                    interval2 = window.setInterval(updatePosition, 10000);
+                }
+
+                stop_button.onclick = function(){
+                    window.clearInterval(interval1);
+                    window.clearInterval(interval2);
+                }
+
+                function updatePosition(){
+                    navigator.geolocation.getCurrentPosition(function(new_location) {
+                        current_position = new_location.latitude;
+                    });
+                }
+
+                function sendPosition(){
+                    socket.emit('update_position', {'name': username.value, 'position': current_position});
+                    i += 1;
+                }
+
+
+            </script>
+    </body>
+</html>

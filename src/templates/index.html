@@ -13,8 +13,7 @@
         </form>
         <h1>Flask Google Maps</h1>
         {% with %}
-
-            {% set location=(-23.599097,-46.675903) %}
+            {% set location=(60.185509859, 24.824594148) %}
             {% set style="width:500px;height:500px;"%}
 
             {{
@@ -60,7 +59,7 @@
 
                 function updatePosition(){
                     navigator.geolocation.getCurrentPosition(function(new_location) {
-                        current_position = new_location.latitude;
+                        current_position = [new_location.coords.latitude, new_location.coords.longitude];
                     });
                 }
 

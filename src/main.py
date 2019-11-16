@@ -12,7 +12,7 @@ GoogleMaps(
     app,
     key="AIzaSyBmm32aJXraStLKXAG0J3rpyWIDOSM0w2E"
 )
-            
+
 socketio = SocketIO(app)
 
 @app.route('/')

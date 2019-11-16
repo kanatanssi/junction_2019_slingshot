@@ -1,0 +1,19 @@
+<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0)">
+        <path d="M15.6 2L0 38L26 20L15.6 2Z" fill="#FFDEA0" stroke="#F6D4A1" stroke-width="2" />
+        <path d="M43.5789 2L60 38L34 18.5405L43.5789 2Z" fill="#FFDEA0" stroke="#F6D4A1"
+            stroke-width="2" />
+        <path
+            d="M59 38C59 43.68 55.8626 48.9067 50.6218 52.7499C45.3817 56.5927 38.094 59 30 59C21.906 59 14.6183 56.5927 9.37816 52.7499C4.13739 48.9067 1 43.68 1 38C1 32.32 4.13739 27.0933 9.37816 23.2501C14.6183 19.4073 21.906 17 30 17C38.094 17 45.3817 19.4073 50.6218 23.2501C55.8626 27.0933 59 32.32 59 38Z"
+            fill="#FBE2B3" stroke="#F6D4A1" stroke-width="2" />
+        <path d="M12 54L30.4865 44L48 54" stroke="#F6D4A1" stroke-width="2" />
+        <path d="M12 52L30.4865 42L48 52" stroke="#576780" stroke-width="2" />
+        <path d="M30 40L26 36H34L30 40Z" fill="#576780" stroke="#576780" stroke-width="2" />
+        <path
+            d="M44 24L38 26L34 30V34L38 38L43 37L47 32L44 28H40L37 30V33L40 35L42 34L43 32L42 31H41H40V32"
+            stroke="#576780" stroke-width="2" />
+        <path
+            d="M24 24L18 26L14 30V34L18 38L23 37L27 32L24 28H20L17 30V33L20 35L22 34L23 32L22 31H21H20V32"
+            stroke="#576780" stroke-width="2" />
+    </g>
+</svg>

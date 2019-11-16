@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+    <style>
+        .button input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked+label {
+            background-color: #B200B7;
+            border-radius: 50%;
+        }
+
+        #outer {
+            width: 100%;
+            text-align: center;
+        }
+
+        #inner {
+            display: inline-block;
+        }
+    </style>
+
+    <div id="outer" style="background-color: rgba(178,0,183,0.20); width: 100%; height: 100%; margin: 0%;">
+        <div id="inner" style="width: 100%;">
+            <!--This is the logo at the top of the opening page.-->
+            <img src="img/logo.svg">
+
+            <br>
+            <img src="img/angerroo.svg" width="20%">
+            <br>
+
+            <div class="button" style="display:inline; ">
+                <input type="radio" name="a" value="a" id="a" />
+                <label for="a">
+                    <!--Base dingus-->
+                    <img src="img/base_dingus.svg" width="15%">
+                </label>
+            </div>
+            <div class="button" style="display:inline">
+                <input type="radio" name="a" value="b" id="b" />
+                <label for="b">
+                    <!--Sweat dingus-->
+                    <img src="img/sweat_dingus.svg" width="15%">
+                </label>
+            </div>
+            <div class="button" style="display:inline">
+                <input type="radio" name="a" value="c" id="c" />
+                <label for="c">
+                    <!--Spiral dingus-->
+                    <img src="img/spiral_dingus.svg" width="15%">
+                </label>
+            </div>
+            <div class="button" style="display:inline">
+                <input type="radio" name="a" value="d" id="d" />
+                <label for="d">
+                    <!--Thinking dingus-->
+                    <img src="img/thinking_dingus.svg" width="15%">
+                </label>
+            </div>
+            <div class="button" style="display:inline">
+                <input type="radio" name="a" value="e" id="e" />
+                <label for="e">
+                    <!--Weary dingus-->
+                    <img src="img/weary_dingus.svg" width="15%">
+                </label>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

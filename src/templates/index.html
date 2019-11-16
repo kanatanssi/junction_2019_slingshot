@@ -11,7 +11,7 @@
             <input type="button" value='Start' id='start_button' />
             <input type="button" value='Stop' id='stop_button' />
         </form>
-        <h1>Flask Google Maps</h1>
+        <!-- <h1>Flask Google Maps</h1>
         {% with %}
             {% set location=(60.185509859, 24.824594148) %}
             {% set style="width:500px;height:500px;"%}
@@ -25,7 +25,7 @@
                 )
             }}
 
-        {% endwith %}
+        {% endwith %} -->
             <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
             <script type="text/javascript" charset="utf-8">
                 var chat_log = document.getElementById('chat_log');
@@ -37,8 +37,9 @@
                 var username = document.getElementsByName('username')[0];
                 var socket = io();
                 var i = 0;
+                
                 socket.on('connect', function() {
-                    socket.emit('joined', {});
+                    socket.emit('join', {});
                 });
 
                 socket.on('update', function(data){
@@ -49,7 +50,7 @@
 
                 start_button.onclick = function(){
                     interval1 = window.setInterval(sendPosition, 1000);
-                    interval2 = window.setInterval(updatePosition, 10000);
+                    interval2 = window.setInterval(updatePosition, 500);
                 }
 
                 stop_button.onclick = function(){

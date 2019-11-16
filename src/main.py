@@ -38,37 +38,6 @@ def handle_update_position(data):
 @app.route("/map")
 def mapview():
     # creating a map in the view
-    sndmap = Map(
-        identifier="sndmap",
-        lat=60.185509859,
-        lng=24.824594148,
-        markers=[
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-             'lat': 60.186709, 
-             'lng': 24.833501,
-             'infobox': "<b>Prong 1</b>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-             'lat': 60.186182, 
-             'lng': 24.826143,
-             'infobox': "<b>Prong 2</b>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-             'lat': 60.189557,
-             'lng': 24.829249,
-             'infobox': "<b>Pellet</b>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-             'lat': 60.176536,
-             'lng': 24.834275,
-             'infobox': "<b>Target</b>"
-          }
-        ]
-    )
     movingmap = Map(
         identifier="movingmap",
         varname="movingmap",
@@ -76,25 +45,32 @@ def mapview():
         lng=24.824594148,
         markers=[
             {
-                'lat': 60.186709, 
-                'lng': 24.833501
-            },
-            {
-                'lat': 60.186182,
-                'lng': 24.826143
-            },
-            {
-                'lat': 60.189557,
-                'lng': 24.829249
-            },
-            {
-                'lat': 60.176536,
-                'lng': 24.834275
-            }
+             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/base_small.svg',
+             'lat': 60.186709, 
+             'lng': 24.833501,
+             'infobox': "<b>Prong 1</b>"
+          },
+          {
+             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/sweat_small.svg',
+             'lat': 60.186182, 
+             'lng': 24.826143,
+             'infobox': "<b>Prong 2</b>"
+          },
+          {
+             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/spiral_small.svg',
+             'lat': 60.189557,
+             'lng': 24.829249,
+             'infobox': "<b>Pellet</b>"
+          },
+          {
+             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/angerroo_small.svg',
+             'lat': 60.176536,
+             'lng': 24.834275,
+             'infobox': "<b>Target</b>"
+          }
         ],
-        zoom=12
     )
-    return render_template('map.html', sndmap=sndmap, movingmap=movingmap)
+    return render_template('map.html', movingmap=movingmap)
 
 
 # # Function to make MongoDBAPI object

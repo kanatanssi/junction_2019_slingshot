@@ -31,12 +31,6 @@ def handle_update_position(position):
 @app.route("/map")
 def mapview():
     # creating a map in the view
-    mymap = Map(
-        identifier="view-side",
-        lat=60.185509859,
-        lng=24.824594148,
-        markers=[(60.185509859, 24.824594148)]
-    )
     sndmap = Map(
         identifier="sndmap",
         lat=60.185509859,
@@ -75,32 +69,25 @@ def mapview():
         lng=24.824594148,
         markers=[
             {
-                'lat': 60.186709,
+                'lat': 60.186709, 
                 'lng': 24.833501
+            },
+            {
+                'lat': 60.186182,
+                'lng': 24.826143
+            },
+            {
+                'lat': 60.189557,
+                'lng': 24.829249
+            },
+            {
+                'lat': 60.176536,
+                'lng': 24.834275
             }
         ],
         zoom=12
     )
-
-    movingmarkers = [
-        {
-            'lat': 60.186709, 
-            'lng': 24.833501
-        },
-        {
-            'lat': 60.186182,
-            'lng': 24.826143
-        },
-        {
-            'lat': 60.189557,
-            'lng': 24.829249
-        },
-        {
-            'lat': 60.176536,
-            'lng': 24.834275
-        }
-    ]
-    return render_template('map.html', mymap=mymap, sndmap=sndmap, movingmap=movingmap, movingmarkers=movingmarkers)
+    return render_template('map.html', sndmap=sndmap, movingmap=movingmap)
 
 
 # # Function to make MongoDBAPI object

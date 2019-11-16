@@ -1,11 +1,8 @@
 <!DOCTYPE html>
     <html>
     <head>
-            {{"decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)])}}
-            {{mymap.js}}
             {{sndmap.js}}
             {{movingmap.js}}
-            {{movingmarkers.js}}
     </head>
     <body>
         <h1>Discombobulated Dingos</h1>
@@ -16,9 +13,15 @@
         
         {{movingmap.html}}
 
-        {%  for position in movingmarkers %}
-        <button onclick='movingmap_markers.map(function(mk){mk.setPosition({lat: {{ position.lat }}, lng:{{ position.lng }}})})'>Go to position {{ loop.index }} </button>
-        {% endfor %}
+        <button onclick='renderMarkers([60.176536,24.834275])'>Go to new position</button>
+
+        <script type="text/javascript" charset="utf-8">
+
+            function renderMarkers(new_location){
+                movingmap_markers[0].setPosition({lat: new_location[0],lng: new_location[1]});
+            }
+
+        </script>
 
     </body>
 </html>

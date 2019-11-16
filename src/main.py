@@ -98,8 +98,8 @@ def mapview():
 
 
 # # Function to make MongoDBAPI object
-# def makeObject(link=link, dbName = "LocalDB", dbCollection="ChariotCloudTable"):
-#     mdbobject = MongoDBDriver.MongoDBAPI(link, user, password, authdb)
+# def makeObject(link=link, dbName = "LocalDB", dbCollection="LocalCollection"):
+#     mdbobject = MongoDBDriver.MongoDBAPI(link)
 #     mdbobject.defineDB(dbName)
 #     mdbobject.defineCollection(dbCollection)
 #     return mdbobject
@@ -110,7 +110,7 @@ class Thread(object):
         self.thread = None
 
     def start_server(self):
-        socketio.run(app, port=80, debug=True, use_reloader=False)
+        socketio.run(app, host = "0.0.0.0", port=80, debug=True, use_reloader=False)
 
     def start(self):
         self.thread = socketio.start_background_task(self.start_server)

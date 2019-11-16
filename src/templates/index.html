@@ -7,25 +7,11 @@
         <div id="chat_log"></div>
         <form id="input_form">
             <label>Name:</label>
-            <input type="text" name='username' />
+            <input type="text" name='nickname' />
             <input type="button" value='Start' id='start_button' />
             <input type="button" value='Stop' id='stop_button' />
         </form>
-        <!-- <h1>Flask Google Maps</h1>
-        {% with %}
-            {% set location=(60.185509859, 24.824594148) %}
-            {% set style="width:500px;height:500px;"%}
 
-            {{
-            googlemap(
-                "simple-map",
-                location.0, location.1,
-                markers=[location,],
-                style=style
-                )
-            }}
-
-        {% endwith %} -->
             <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
             <script type="text/javascript" charset="utf-8">
                 var chat_log = document.getElementById('chat_log');
@@ -34,11 +20,12 @@
                 var interval1;
                 var interval2;
                 var current_position = "";
-                var username = document.getElementsByName('username')[0];
+                var nickname = document.getElementsByName('nickname')[0];
                 var socket = io();
                 var i = 0;
+                
                 socket.on('connect', function() {
-                    socket.emit('joined', {});
+                    socket.emit('join', {'nickname': nickname.value});
                 });
 
                 socket.on('update', function(data){
@@ -47,9 +34,15 @@
                     chat_log.append(element);
                 });
 
+                socket.on('state_update', function(state){
+                    state = JSON.parse(state);
+
+                    chat_log.innerText = JSON.stringify(['players'])
+                });
+
                 start_button.onclick = function(){
                     interval1 = window.setInterval(sendPosition, 1000);
-                    interval2 = window.setInterval(updatePosition, 500);
+                    interval2 = window.setInterval(updatePosition, 2000);
                 }
 
                 stop_button.onclick = function(){
@@ -64,8 +57,13 @@
                 }
 
                 function sendPosition(){
-                    socket.emit('update_position', {'name': username.value, 'position': current_position});
-                    i += 1;
+                    socket.emit('update_position', {'nickname': nickname.value, 'position': current_position});
+                }
+
+                
+
+                function renderState(state){
+
                 }
 
 

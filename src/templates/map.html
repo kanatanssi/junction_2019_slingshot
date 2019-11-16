@@ -3,7 +3,6 @@
     <head>
             <title>Slingshot</title>
             <link rel='stylesheet' href="css/index.css">
-            {{sndmap.js}}
             {{movingmap.js}}
     </head>
     <body>
@@ -51,11 +50,11 @@
                     movingmap_markers[i].setPosition({lat: players[player].latitude,
                                                       lng: players[player].longitude});
                     movingmap_markers[i].setLabel(player);
-                    if (players[player].is_shooting) {
-                        movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
-                    } else {
-                        movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
-                    }
+                    // if (players[player].is_shooting) {
+                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+                    // } else {
+                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+                    // }
                     i++;
                 }
 

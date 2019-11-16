@@ -2,6 +2,9 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, join_room, emit
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
+from game import GameState
+import json
+
 
 # initialize Flask
 app = Flask(__name__,
@@ -15,18 +18,22 @@ GoogleMaps(
 
 socketio = SocketIO(app)
 
+game_state = GameState()
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @socketio.on('join')
 def handle_joined(data):
-    join_room('main_room')
-    emit('update', {'msg': 'Somebody joined'}, room='main_room')
+    nickname = data['nickname']
+    game_state.add_player(nickname)
+    #emit('update', {'msg': f'{nickname} joined'})
 
 @socketio.on('update_position')
-def handle_update_position(position):
-    emit('update', {'msg': f"Position of {position['name']} is {position['position']}"}, room='main_room')
+def handle_update_position(data):
+    game_state.update_player_position(data['nickname'], data['position'])
+
 
 @app.route("/map")
 def mapview():
@@ -70,5 +77,30 @@ def mapview():
     )
     return render_template('map.html', mymap=mymap, sndmap=sndmap)
 
+class Thread(object):
+    def __init__(self):
+        self.thread = None
+
+    def start_server(self):
+        socketio.run(app, port=80, debug=True, use_reloader=False)
+
+    def start(self):
+        self.thread = socketio.start_background_task(self.start_server)
+
+    def wait(self):
+        self.thread.join()
+
+
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    t = Thread()
+    t.start()
+
+
+    while True:
+        socketio.sleep(1)
+        game_state.update()
+        socketio.emit('state_update', game_state.get_json())
+        print('Sent updated state')
+
+    socketio.wait()
+

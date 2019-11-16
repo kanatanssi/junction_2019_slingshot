@@ -37,8 +37,9 @@
                 var username = document.getElementsByName('username')[0];
                 var socket = io();
                 var i = 0;
+                
                 socket.on('connect', function() {
-                    socket.emit('joined', {});
+                    socket.emit('join', {});
                 });
 
                 socket.on('update', function(data){

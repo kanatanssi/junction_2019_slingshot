@@ -19,19 +19,14 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@socketio.on('joined')
-def handle_joined(message):
+@socketio.on('join')
+def handle_joined(data):
     join_room('main_room')
     emit('update', {'msg': 'Somebody joined'}, room='main_room')
 
-
 @socketio.on('update_position')
-def handle_text(position):
-    emit('update', {'msg': "Position of {position['name']} is {position['position']}"}, room='main_room')
+def handle_update_position(position):
+    emit('update', {'msg': f"Position of {position['name']} is {position['position']}"}, room='main_room')
 
 @app.route("/map")
 def mapview():

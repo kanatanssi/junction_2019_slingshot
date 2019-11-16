@@ -1,0 +1,20 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0)">
+        <path d="M22.2536 85.1467L50.133 33.817L41.2138 20.7901L23.6561 14.2345L3.71572 18.522L20.3606 41.8233L22.2536 85.1467Z" fill="#F69292" stroke="#CE7878" stroke-width="4"/>
+        <path d="M91.1132 84.8555L66.1473 32.0474L75.7809 19.5396L93.6777 13.9759L113.347 19.3716L95.4255 41.7058L91.1132 84.8555Z" fill="#F69292" stroke="#CE7878" stroke-width="4"/>
+        <path d="M105 76C105 99.0737 84.9791 118 60 118C35.0209 118 15 99.0737 15 76C15 52.9263 35.0209 34 60 34C84.9791 34 105 52.9263 105 76Z" fill="#F69292" stroke="#CE7878" stroke-width="4"/>
+        <path d="M61 82L42 108L61 100.5L82.5 110.5L61 82Z" fill="#FFF6D5" stroke="black"/>
+        <path d="M54 90V104" stroke="#576780"/>
+        <path d="M61 83V99" stroke="#576780"/>
+        <path d="M68 90V104" stroke="#576780"/>
+        <path d="M38 113L60.973 81L83.5 113" stroke="#576780" stroke-width="4"/>
+        <path d="M38 113L60.7205 100L83 113" stroke="#576780" stroke-width="4"/>
+        <path d="M75.474 66.0677L80.6331 57.3709L71.2123 62.5909" stroke="#576780" stroke-width="4"/>
+        <path d="M45.3214 66.2253L40.1623 57.5286L49.5831 62.7485" stroke="#576780" stroke-width="4"/>
+        <path d="M53 71H69L66.5 77L61 79L55.5 77L53 71Z" fill="#576780" stroke="#576780" stroke-width="4"/>
+        <path d="M31.5 47L53.5 56.5" stroke="#576780" stroke-width="6"/>
+        <path d="M89 47L67 56.5" stroke="#576780" stroke-width="6"/>
+        <ellipse cx="32.5" cy="77" rx="13.5" ry="7" fill="#CE7878"/>
+        <ellipse cx="87.5" cy="77" rx="13.5" ry="7" fill="#CE7878"/>
+    </g>
+</svg>

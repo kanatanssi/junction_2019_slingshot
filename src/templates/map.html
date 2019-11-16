@@ -4,11 +4,21 @@
             {{"decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)])}}
             {{mymap.js}}
             {{sndmap.js}}
+            {{movingmap.js}}
+            {{movingmarkers.js}}
     </head>
     <body>
-        <h1>Flask Google Maps</h1>
+        <h1>Discombobulated Dingos</h1>
 
         {{sndmap.html}}
+
+        <h1> Moving Dingos</h1>
+        
+        {{movingmap.html}}
+
+        {%  for position in movingmarkers %}
+        <button onclick='movingmap_markers.map(function(mk){mk.setPosition({lat: {{ position.lat }}, lng:{{ position.lng }}})})'>Go to position {{ loop.index }} </button>
+        {% endfor %}
 
     </body>
 </html>

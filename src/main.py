@@ -90,7 +90,7 @@ class Thread(object):
         self.thread = None
 
     def start_server(self):
-        socketio.run(app, debug=True, port=80, use_reloader=False)
+        socketio.run(app, debug=True, use_reloader=False)
 
     def start(self):
         self.thread = socketio.start_background_task(self.start_server)

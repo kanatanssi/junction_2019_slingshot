@@ -1,13 +1,20 @@
 <!DOCTYPE html>
     <html>
     <head>
-            {{sndmap.js}}
+            <title>Slingshot</title>
+            <link rel='stylesheet' href="css/index.css">
             {{movingmap.js}}
     </head>
     <body>
-        <h1>Discombobulated Dingos</h1>
 
-        {{sndmap.html}}
+        <div id="chat_log"></div>
+        <form id="input_form">
+            <label>Name:</label>
+            <input type="text" name='nickname' />
+            <input type="button" value='Start' id='start_button' />
+            <input type="button" value='Stop' id='stop_button' />
+            <input type="button" value='Shoot' id='shoot_button' />
+        </form>
 
         <h1> Moving Dingos</h1>
         
@@ -15,13 +22,70 @@
 
         <button onclick='renderMarkers([60.176536,24.834275])'>Go to new position</button>
 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
         <script type="text/javascript" charset="utf-8">
+            var chat_log = document.getElementById('chat_log');
+            var start_button = document.getElementById('start_button');
+            var stop_button = document.getElementById('stop_button');
+            var shoot_button = document.getElementById('shoot_button');
+            var interval1;
+            var interval2;
+            var current_position = "";
+            var nickname = document.getElementsByName('nickname')[0];
+            var socket = io();
+            
+            
 
-            function renderMarkers(new_location){
-                movingmap_markers[0].setPosition({lat: new_location[0],lng: new_location[1]});
+            socket.on('update', function(data){
+                var element = document.createElement('div');
+                element.innerText = data.msg;
+                chat_log.append(element);
+            });
+
+            socket.on('state_update', function(state){
+                state = JSON.parse(state);
+                var players = state.players;
+                var i = 0;
+                for (var player in players){
+                    movingmap_markers[i].setPosition({lat: players[player].latitude,
+                                                      lng: players[player].longitude});
+                    movingmap_markers[i].setLabel(player);
+                    // if (players[player].is_shooting) {
+                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+                    // } else {
+                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+                    // }
+                    i++;
+                }
+
+                chat_log.innerText = JSON.stringify(state);
+            });
+
+            start_button.onclick = function(){
+                socket.emit('join', {'nickname': nickname.value});
+                interval1 = window.setInterval(sendPosition, 1000);
+                interval2 = window.setInterval(updatePosition, 2000);
             }
 
-        </script>
+            stop_button.onclick = function(){
+                window.clearInterval(interval1);
+                window.clearInterval(interval2);
+            }
 
+            shoot_button.onclick = function(){
+                socket.emit('shoot', {'nickname': nickname.value})
+            }
+
+            function updatePosition(){
+                navigator.geolocation.getCurrentPosition(function(new_location) {
+                    current_position = [new_location.coords.latitude, new_location.coords.longitude];
+                });
+            }
+
+            function sendPosition(){
+                socket.emit('update_position', {'nickname': nickname.value, 'position': current_position});
+                i += 1;
+            }
+        </script>
     </body>
 </html>

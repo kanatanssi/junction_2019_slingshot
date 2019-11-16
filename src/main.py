@@ -28,12 +28,16 @@ def index():
 def handle_joined(data):
     nickname = data['nickname']
     game_state.add_player(nickname)
-    #emit('update', {'msg': f'{nickname} joined'})
 
 @socketio.on('update_position')
 def handle_update_position(data):
     game_state.update_player_position(data['nickname'], data['position'])
 
+
+@socketio.on('shoot')
+def handle_shoot(data):
+    nickname = data['nickname']
+    game_state.toggle_player_is_shooting(nickname)
 
 @app.route("/map")
 def mapview():
@@ -127,7 +131,7 @@ if __name__ == '__main__':
     while True:
         socketio.sleep(1)
         game_state.update()
-        socketio.emit('state_update', game_state.get_json())
+        socketio.emit('state_update', game_state.get_json(), scope='/map')
         print('Sent updated state')
 
     socketio.wait()

@@ -8,12 +8,17 @@ class GameState:
     def add_player(self, nickname):
         self.players[nickname] = Player(nickname)
 
+    def toggle_player_is_shooting(self, nickname):
+        if nickname in self.players:
+            self.players[nickname].is_shooting = not self.players[nickname].is_shooting
+
     def remove_player(self, nickname):
         del self.players[nickname]
 
     def update_player_position(self, nickname, position):
-        self.players[nickname].latitude = float(position[0])
-        self.players[nickname].longitude = float(position[1])
+        if nickname in self.players:
+            self.players[nickname].latitude = float(position[0])
+            self.players[nickname].longitude = float(position[1])
 
     def update(self):
         pass
@@ -27,6 +32,7 @@ class Player:
         self.nick = nickname
         self.latitude = latitude
         self.longitude = longitude
+        self.is_shooting = False
 
 
 class Target:

@@ -1,11 +1,16 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, join_room, emit
+from flask_googlemaps import GoogleMaps
 
 # initialize Flask
 app = Flask(__name__,
             static_url_path='',
             static_folder='static',
             template_folder='templates')
+GoogleMaps(
+    app,
+    key="AIzaSyBmm32aJXraStLKXAG0J3rpyWIDOSM0w2E"
+)
             
 socketio = SocketIO(app)
 

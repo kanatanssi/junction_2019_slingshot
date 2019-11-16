@@ -1,2 +1,5 @@
 # You don't want this
 .DS_Store
+venv/
+__pycache__/
+.vscode/

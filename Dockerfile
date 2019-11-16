@@ -1,4 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.7
+FROM python:3
 
 # Force Redeploy
 ADD https://api.github.com/repos/shreyasgokhale/junction_2019_slingshot/git/refs/heads/master master.json
@@ -9,3 +9,5 @@ ADD https://api.github.com/repos/shreyasgokhale/junction_2019_slingshot/git/refs
 COPY ./src /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
+ENTRYPOINT [ "python" ]
+CMD [ "/app/main.py" ]

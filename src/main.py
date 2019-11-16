@@ -70,5 +70,14 @@ def mapview():
     )
     return render_template('map.html', mymap=mymap, sndmap=sndmap)
 
+
+# # Function to make MongoDBAPI object
+# def makeObject(link=link, dbName = "LocalDB", dbCollection="ChariotCloudTable"):
+#     mdbobject = MongoDBDriver.MongoDBAPI(link, user, password, authdb)
+#     mdbobject.defineDB(dbName)
+#     mdbobject.defineCollection(dbCollection)
+#     return mdbobject
+
+
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host="0.0.0.0", debug=True)

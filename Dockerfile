@@ -1,4 +1,7 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.7
+
+# Force Redeploy
+ADD https://api.github.com/repos/shreyasgokhale/junction_2019_slingshot/git/refs/heads/master master.json
 # RUN apk --update add bash nano
 # ENV STATIC_URL /static
 # ENV STATIC_PATH /var/www/app/static

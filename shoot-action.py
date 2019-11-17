@@ -6,7 +6,7 @@ def shoot(prong1, prong2, pellet):
 
 	#convert and calculate the middle of the sling
 	nv_pellet = tuple2nvLocation(pellet)
-	nv_midpoint = getMidpoint(prong1, prong2);
+	nv_midpoint = getMidpoint(prong1, prong2)
 
 	#direction of shot
 	azimuth = nv_pellet.delta_to(nv_midpoint).azimuth_deg[0]

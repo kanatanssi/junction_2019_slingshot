@@ -34,12 +34,13 @@ def handle_joined(data):
 
 @socketio.on('update_position')
 def handle_update_position(data):
-    print ("PRINTING DATA", data)
+    print ("update_position data ", data)
     game_state.update_player_position(data['nickname'], data['position'])
 
 
 @socketio.on('shoot')
 def handle_shoot(data):
+    print ("handle_shoot data", data)
     nickname = data['nickname']
     game_state.toggle_player_is_shooting(nickname)
 

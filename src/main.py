@@ -4,6 +4,7 @@ from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 from game import GameState
 import json
+#import shoot-action
 
 
 # initialize Flask
@@ -18,7 +19,7 @@ GoogleMaps(
 
 socketio = SocketIO(app)
 
-game_state = GameState()
+#game_state = GameState()
 
 @app.route('/')
 def index():
@@ -26,11 +27,14 @@ def index():
 
 @socketio.on('join')
 def handle_joined(data):
+    print ("data nickname" + data['nickname'])
     nickname = data['nickname']
-    game_state.add_player(nickname)
+    print (game_state.add_player(nickname))
+
 
 @socketio.on('update_position')
 def handle_update_position(data):
+    print ("PRINTING DATA", data)
     game_state.update_player_position(data['nickname'], data['position'])
 
 
@@ -38,6 +42,7 @@ def handle_update_position(data):
 def handle_shoot(data):
     nickname = data['nickname']
     game_state.toggle_player_is_shooting(nickname)
+
 
 @app.route("/map")
 def mapview():
@@ -102,6 +107,7 @@ class Thread(object):
 if __name__ == '__main__':
     t = Thread()
     t.start()
+    game_state = GameState()
 
 
     while True:

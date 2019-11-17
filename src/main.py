@@ -53,32 +53,7 @@ def mapview():
         varname="movingmap",
         lat=60.185509859,
         lng=24.824594148,
-        markers=[
-            {
-             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/base_small.svg',
-             'lat': 60.186709, 
-             'lng': 24.833501,
-             'infobox': "<b>Prong 1</b>"
-          },
-          {
-             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/sweat_small.svg',
-             'lat': 60.186182, 
-             'lng': 24.826143,
-             'infobox': "<b>Prong 2</b>"
-          },
-          {
-             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/spiral_small.svg',
-             'lat': 60.189557,
-             'lng': 24.829249,
-             'infobox': "<b>Pellet</b>"
-          },
-          {
-             'icon': 'https://users.aalto.fi/~villev1/junc2019/img/angerroo_small.svg',
-             'lat': 60.176536,
-             'lng': 24.834275,
-             'infobox': "<b>Target</b>"
-          }
-        ],
+        markers=[],
     )
     return render_template('map.html', movingmap=movingmap)
 

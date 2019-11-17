@@ -110,6 +110,7 @@
 //        var nickname = document.getElementsByName('nickname')[0];
         var nicknameRand = String(Math.floor((Math.random() * 100000) + 1));;
         var socket = io();
+        var nickToMarker = {}
 
 
 
@@ -123,16 +124,29 @@
             state = JSON.parse(state);
             var players = state.players;
             var i = 0;
+            console.log(movingmap_markers);
             for (var player in players) {
+                if(!(player in nickToMarker)) {
+                    movingmap_markers.push(
+                        new google.maps.Marker({
+                            position: new google.maps.LatLng(players[player].latitude, players[player].longitude),
+                            map: movingmap,
+                            icon: 'https://users.aalto.fi/~villev1/junc2019/img/base_small.svg',
+                            title: player,
+                        }));
+                    nickToMarker[player] = movingmap_markers.length - 1;
+                    
+                }
+                i = nickToMarker[player];
                 movingmap_markers[i].setPosition({
                     lat: players[player].latitude,
                     lng: players[player].longitude
                 });
                 movingmap_markers[i].setLabel(player);
                 if (players[player].is_shooting) {
-                     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+                    movingmap_markers[i].setIcon('https://users.aalto.fi/~villev1/junc2019/img/base_small.svg')
                 } else {
-                    movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+                    movingmap_markers[i].setIcon('https://users.aalto.fi/~villev1/junc2019/img/spiral_small.svg')
                 }
                 i++;
             }

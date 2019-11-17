@@ -40,7 +40,7 @@ def handle_update_position(data):
 
 @socketio.on('shoot')
 def handle_shoot(data):
-    print (handle_)
+    print ("handle_shoot data", data)
     nickname = data['nickname']
     game_state.toggle_player_is_shooting(nickname)
 

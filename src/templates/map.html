@@ -37,7 +37,7 @@
         }
 
         #shoot_button {
-            background-color: #B200B7;
+            background-color: #f38100;
             border: none;
             color: white;
             padding: 1%;
@@ -91,8 +91,9 @@
 
     {{movingmap.html}}
 
+    <input type="button" value="Shoot" id="shoot_button" style="position: absolute; bottom: 15%; right: 10%;">
     <input type="button" value="Start" id="start_button" style="position: absolute; bottom: 15%; right: 10%;">
-    <input type="button" value="Shoot" id="shoot_button" style="position: absolute; bottom: 5%; right: 10%;">
+    
 
 <!--    <button onclick='renderMarkers([60.176536,24.834275])'>Go to new position</button>-->
 
@@ -105,9 +106,9 @@
         var shoot_button = document.getElementById('shoot_button');
         var interval1;
         var interval2;
-        var current_position = "";
+        var current_position = [0 , 0];
 //        var nickname = document.getElementsByName('nickname')[0];
-        var nickname = "placeholder";
+        var nicknameRand = String(Math.floor((Math.random() * 100000) + 1));;
         var socket = io();
 
 
@@ -139,11 +140,17 @@
             //chat_log.innerText = JSON.stringify(state);
         });
 
+        // give the player a random number as a nickname
         start_button.onclick = function () {
-            socket.emit('join', { 'nickname': nickname.value });
-            console.log("start clicked");
+            //var rand = String(Math.floor((Math.random() * 100000) + 1));
+            socket.emit('join', { 'nickname': nicknameRand });
+            console.log("start clicked, nickname " + nicknameRand);
             interval1 = window.setInterval(sendPosition, 1000);
             interval2 = window.setInterval(updatePosition, 2000);
+            //document.getElementById('start_button').value = "Shoot!";
+            //document.getElementById('start_button').id = "shoot_button";
+            //document.getElementById('start_button').style.background='#c4c4c4';
+            document.getElementById('start_button').style.visibility='hidden'; // TODO make a more sophisticated disable for the start button
         }
 
         // stop_button.onclick = function () {
@@ -152,7 +159,7 @@
         // }
 
         shoot_button.onclick = function () {
-            socket.emit('shoot', { 'nickname': nickname.value })
+            socket.emit('shoot', { 'nickname': nicknameRand })
             console.log("shoot clicked");
         }
 
@@ -160,12 +167,12 @@
             navigator.geolocation.getCurrentPosition(function (new_location) {
                 current_position = [new_location.coords.latitude, new_location.coords.longitude];
             });
-            console.log("Position updated");
         }
 
         function sendPosition() {
-            socket.emit('update_position', { 'nickname': nickname.value, 'position': current_position });
+            socket.emit('update_position', { 'nickname': nicknameRand, 'position': current_position });
             i += 1;
+            console.log("current position: ", current_position);
         }
     </script>
 </body>

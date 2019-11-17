@@ -1,91 +1,173 @@
 <!DOCTYPE html>
-    <html>
-    <head>
-            <title>Slingshot</title>
-            <link rel='stylesheet' href="css/index.css">
-            {{movingmap.js}}
-    </head>
-    <body>
+<html>
 
-        <div id="chat_log"></div>
-        <form id="input_form">
-            <label>Name:</label>
-            <input type="text" name='nickname' />
-            <input type="button" value='Start' id='start_button' />
-            <input type="button" value='Stop' id='stop_button' />
-            <input type="button" value='Shoot' id='shoot_button' />
-        </form>
+<head>
+    <title>Slingshot</title>
+    <link rel='stylesheet' href="css/index.css">
+    {{movingmap.js}}
+</head>
 
-        <h1> Moving Dingos</h1>
-        
-        {{movingmap.html}}
+<body style="background-color: rgba(243,129,0,0.20);">
+    <style>
+        #sidebar {
+            position: absolute;
+            right: 10%;
+            top: 10%;
+            height: 50%;
+            width: 15%;
+            border-radius: 30px;
+            z-index: 10;
+        }
 
-        <button onclick='renderMarkers([60.176536,24.834275])'>Go to new position</button>
+        #outer {
+            width: 100%;
+            text-align: center;
+        }
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-        <script type="text/javascript" charset="utf-8">
-            var chat_log = document.getElementById('chat_log');
-            var start_button = document.getElementById('start_button');
-            var stop_button = document.getElementById('stop_button');
-            var shoot_button = document.getElementById('shoot_button');
-            var interval1;
-            var interval2;
-            var current_position = "";
-            var nickname = document.getElementsByName('nickname')[0];
-            var socket = io();
-            
-            
+        #inner {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
 
-            socket.on('update', function(data){
-                var element = document.createElement('div');
-                element.innerText = data.msg;
-                chat_log.append(element);
-            });
+        #map-box {
+            width: 100%;
+            height: 75vmax;
+            background-color: black;
+        }
 
-            socket.on('state_update', function(state){
-                state = JSON.parse(state);
-                var players = state.players;
-                var i = 0;
-                for (var player in players){
-                    movingmap_markers[i].setPosition({lat: players[player].latitude,
-                                                      lng: players[player].longitude});
-                    movingmap_markers[i].setLabel(player);
-                    // if (players[player].is_shooting) {
-                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
-                    // } else {
-                    //     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
-                    // }
-                    i++;
-                }
+        #shoot_button {
+            background-color: #B200B7;
+            border: none;
+            color: white;
+            padding: 1%;
+            text-align: center;
+            display: inline-block;
+            font-size: xx-large;
+            cursor: pointer;
+            width: 80%;
+            border-radius: 30px;
+        }
 
-                chat_log.innerText = JSON.stringify(state);
-            });
+        #start_button {
+            background-color: #B200B7;
+            border: none;
+            color: white;
+            padding: 1%;
+            text-align: center;
+            display: inline-block;
+            font-size: xx-large;
+            cursor: pointer;
+            width: 80%;
+            border-radius: 30px;
+        }
 
-            start_button.onclick = function(){
-                socket.emit('join', {'nickname': nickname.value});
-                interval1 = window.setInterval(sendPosition, 1000);
-                interval2 = window.setInterval(updatePosition, 2000);
-            }
+        #dingo-bar {
+            position: absolute;
+            bottom: 1%;
+            width: 99%;
+            height: 13%;
+            background-color: #f38100;
+            display: inline-block;
+            text-align: center;
+        }
 
-            stop_button.onclick = function(){
-                window.clearInterval(interval1);
-                window.clearInterval(interval2);
-            }
+        #movingmap {
+            height: 70vmax;
+            width: 100%;
+        }
+    </style>
 
-            shoot_button.onclick = function(){
-                socket.emit('shoot', {'nickname': nickname.value})
-            }
+    <div>
+        <div id="dingo-bar">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/base_dingus.svg" width="20%">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/pellet.svg" width="10%">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/sweat_dingus.svg" width="20%">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/prong.svg" width="10%">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/spiral_dingus.svg" width="20%">
+            <img src="https://users.aalto.fi/~villev1/junc2019/img/prong.svg" width="10%">
+        </div>
+    </div>
 
-            function updatePosition(){
-                navigator.geolocation.getCurrentPosition(function(new_location) {
-                    current_position = [new_location.coords.latitude, new_location.coords.longitude];
+    {{movingmap.html}}
+
+    <input type="button" value="Start" id="start_button" style="position: absolute; bottom: 15%; right: 10%;">
+    <input type="button" value="Shoot" id="shoot_button" style="position: absolute; bottom: 5%; right: 10%;">
+
+<!--    <button onclick='renderMarkers([60.176536,24.834275])'>Go to new position</button>-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+        integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        //var chat_log = document.getElementById('chat_log');
+        var start_button = document.getElementById('start_button');
+        //var stop_button = document.getElementById('stop_button');
+        var shoot_button = document.getElementById('shoot_button');
+        var interval1;
+        var interval2;
+        var current_position = "";
+//        var nickname = document.getElementsByName('nickname')[0];
+        var nickname = "placeholder";
+        var socket = io();
+
+
+
+    //    socket.on('update', function (data) {
+    //        var element = document.createElement('div');
+    //        element.innerText = data.msg;
+    //        chat_log.append(element);
+    //    });
+
+        socket.on('state_update', function (state) {
+            state = JSON.parse(state);
+            var players = state.players;
+            var i = 0;
+            for (var player in players) {
+                movingmap_markers[i].setPosition({
+                    lat: players[player].latitude,
+                    lng: players[player].longitude
                 });
+                movingmap_markers[i].setLabel(player);
+                if (players[player].is_shooting) {
+                     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+                } else {
+                    movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+                }
+                i++;
             }
 
-            function sendPosition(){
-                socket.emit('update_position', {'nickname': nickname.value, 'position': current_position});
-                i += 1;
-            }
-        </script>
-    </body>
+            //chat_log.innerText = JSON.stringify(state);
+        });
+
+        start_button.onclick = function () {
+            socket.emit('join', { 'nickname': nickname.value });
+            console.log("start clicked");
+            interval1 = window.setInterval(sendPosition, 1000);
+            interval2 = window.setInterval(updatePosition, 2000);
+        }
+
+        // stop_button.onclick = function () {
+        //     window.clearInterval(interval1);
+        //     window.clearInterval(interval2);
+        // }
+
+        shoot_button.onclick = function () {
+            socket.emit('shoot', { 'nickname': nickname.value })
+            console.log("shoot clicked");
+        }
+
+        function updatePosition() {
+            navigator.geolocation.getCurrentPosition(function (new_location) {
+                current_position = [new_location.coords.latitude, new_location.coords.longitude];
+            });
+            console.log("Position updated");
+        }
+
+        function sendPosition() {
+            socket.emit('update_position', { 'nickname': nickname.value, 'position': current_position });
+            i += 1;
+        }
+    </script>
+</body>
+
 </html>

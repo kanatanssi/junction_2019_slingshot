@@ -109,7 +109,7 @@
         var current_position = [0 , 0];
 //        var nickname = document.getElementsByName('nickname')[0];
         var nicknameRand = String(Math.floor((Math.random() * 100000) + 1));;
-        var socket = io();
+        var socket = io({transports: ['websocket']});
 
 
 

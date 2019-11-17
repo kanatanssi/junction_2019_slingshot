@@ -21,7 +21,8 @@
                 var interval2;
                 var current_position = "";
                 var nickname = document.getElementsByName('nickname')[0];
-                var socket = io();
+                // var socket = io();
+                var socket = io({transports: ['websocket']});
                 var i = 0;
                 
                 socket.on('connect', function() {

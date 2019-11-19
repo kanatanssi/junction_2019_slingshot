@@ -4,7 +4,8 @@ from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 from game import GameState
 import json
-#import shoot-action
+import shoot as s
+import random as rand
 
 
 # initialize Flask
@@ -39,10 +40,25 @@ def handle_update_position(data):
 
 
 @socketio.on('shoot')
-def handle_shoot(data):
-    print ("handle_shoot data", data)
-    nickname = data['nickname']
-    game_state.toggle_player_is_shooting(nickname)
+def handle_shoot():
+    #print ("handle_shoot data", data)
+#    playerLocs = game_state.get_player_locs()
+#    print (playerLocs)
+#    pelletLoc = playerLocs[0]
+#    prong1Loc = playerLocs[1]
+#    prong2Loc = playerLocs[2]
+#    target = (60.196958, 24.774768)
+
+    # First player is always the pellet and the shoot function takes the pellet last
+    # The shoot function returns us the endpoint of the shot
+#    shotLands = s.shoot(prong1Loc,prong2Loc, pelletLoc)
+#    if s.targetHit(pelletLoc, shotLands, target):
+    if rand.randint(1,10) > 9:
+        print ("Hit!")
+    else:
+        print ("No hit!")
+#    nickname = data['nickname']
+#    game_state.toggle_player_is_shooting(nickname)
 
 
 @app.route("/map")
@@ -115,6 +131,6 @@ if __name__ == '__main__':
         socketio.sleep(1)
         game_state.update()
         socketio.emit('state_update', game_state.get_json(), scope='/map')
-        print('Sent updated state')
+        #print('Sent updated state')
 
     socketio.wait()

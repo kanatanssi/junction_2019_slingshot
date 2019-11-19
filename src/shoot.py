@@ -68,6 +68,7 @@ def triangle_perimeter(location1, location2, location3):
 
 
 def tuple2nvLocation(location, ellipsoid=True):
+	#print ("TUPLE2NVLOCATION" + location + "LOCATION[0]" + location[0])
 	if ellipsoid:
 		frame = nv.FrameE(name='WGS84')
 	else:

@@ -14,7 +14,7 @@ class GameState:
 
     def add_player(self, nickname):
         print ("PRINTING NICKNAME IN GAME.PY", nickname)
-        if self.playerCount >= 2:
+        if self.playerCount >= 3:
             return "Already have 3 players"
 
         #self.players[nickname] = Player(nickname)
@@ -26,19 +26,31 @@ class GameState:
         else:
             self.players[nickname] = Player(nickname,"prong", self.dingos[self.playerCount])
             #self.players[nickname].role = "prong"
+        print ("All current players:")
+        for p in self.players:
+            print (p)
+
+        self.playerCount = self.playerCount + 1
         return "Added player " + self.players[nickname].nickname + " with role " + self.players[nickname].role
 
-    def toggle_player_is_shooting(self, nickname):
-        if nickname in self.players:
-            self.players[nickname].is_shooting = not self.players[nickname].is_shooting
+#    def toggle_player_is_shooting(self, nickname):
+#        if nickname in self.players:
+#            self.players[nickname].is_shooting = not self.players[nickname].is_shooting
 
-    def remove_player(self, nickname):
-        del self.players[nickname]
+#    def remove_player(self, nickname):
+#        del self.players[nickname]
 
     def update_player_position(self, nickname, position):
         if nickname in self.players:
             self.players[nickname].latitude = float(position[0])
             self.players[nickname].longitude = float(position[1])
+    
+    def get_player_locs(self):
+        playerLocs = ((),)
+        for p in self.players:
+            playerLocs = playerLocs + (self.players[p].latitude, self.players[p].longitude)
+        playerLocs = playerLocs[0:3]
+        return playerLocs
 
     def update(self):
         pass

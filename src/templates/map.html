@@ -129,11 +129,11 @@
                     lng: players[player].longitude
                 });
                 movingmap_markers[i].setLabel(player);
-                if (players[player].is_shooting) {
-                     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
-                } else {
-                    movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
-                }
+//                if (players[player].is_shooting) {
+//                     movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+//                } else {
+//                    movingmap_markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+//                }
                 i++;
             }
 
@@ -159,7 +159,7 @@
         // }
 
         shoot_button.onclick = function () {
-            socket.emit('shoot', { 'nickname': nicknameRand })
+            socket.emit('shoot')//, { 'nickname': nicknameRand })
             console.log("shoot clicked");
         }
 
@@ -172,7 +172,7 @@
         function sendPosition() {
             socket.emit('update_position', { 'nickname': nicknameRand, 'position': current_position });
             i += 1;
-            console.log("current position: ", current_position);
+            console.log("nickname", nicknameRand, "current position: ", current_position);
         }
     </script>
 </body>
